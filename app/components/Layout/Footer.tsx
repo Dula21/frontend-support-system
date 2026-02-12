@@ -38,16 +38,13 @@ export default function Footer() {
             <p className="text-text-muted">Phone: +1 (123) 456-7890</p>
             <div className="flex space-x-4 mt-4">
               <a href="#" className="text-text-muted hover:text-accent-main transition duration-200">
-                Twitter
-              </a>
-              <a href="#" className="text-text-muted hover:text-accent-main transition duration-200">
                 LinkedIn
               </a>
             </div>
           </div>
         </div>
         <div className="border-t border-border-soft mt-8 pt-8 text-center">
-          <p className="text-text-muted">&copy; 2023 Support Ticket System. All rights reserved.</p>
+          <p className="text-text-muted">&copy; 2026 Support Ticket System. All rights reserved.</p>
         </div>
       </div>
     </footer>
