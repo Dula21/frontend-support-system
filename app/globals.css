@@ -1,26 +1,26 @@
 @import "tailwindcss";
-@import "tailwindcss/preflight";
 
-
-
+/* Theme Variables */
 :root {
-  --bg-main: #171417;           /* deeper neutral base */
-  --text-main: #E6E6E6;         /* light but not pure white */
-  --text-muted: #A6A6A6;        /* softer muted for contrast */
-  --accent-main: #8A3C54;       /* deeper dusty rose */
+  --bg-main: #171417;
+  --text-main: #E6E6E6;
+  --text-muted: #A6A6A6;
+  --accent-main: #8A3C54;
   --accent-soft: rgba(138, 60, 84, 0.2);
   --border-soft: rgba(255, 255, 255, 0.05);
 }
 
+/* Base Styles */
 html,
 body {
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;  /* Fixed to "Poppins" */
+  font-family: "Poppins", sans-serif;
   background: var(--bg-main);
   color: var(--text-main);
 }
 
+/* Custom Animations */
 @layer utilities {
   @keyframes blink {
     0%, 100% { opacity: 1; }
@@ -41,6 +41,7 @@ body {
   }
 }
 
+/* Reveal Animation */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
@@ -51,11 +52,3 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
-
-/* Custom Tailwind overrides for theme */
-.bg-main { background-color: var(--bg-main); }
-.text-main { color: var(--text-main); }
-.text-muted { color: var(--text-muted); }
-.bg-accent { background-color: var(--accent-main); }
-.bg-accent-soft { background-color: var(--accent-soft); }
-.border-soft { border-color: var(--border-soft); }
