@@ -5,7 +5,7 @@ import api from './../../lib/api';
 
 interface CommentFormProps {
   ticketId: string;
-  onCommentAdded: () => void;  // Callback to refresh comments
+  onCommentAdded: () => void;
 }
 
 export default function CommentForm({ ticketId, onCommentAdded }: CommentFormProps) {
@@ -20,7 +20,7 @@ export default function CommentForm({ ticketId, onCommentAdded }: CommentFormPro
     try {
       await api.post(`/tickets/${ticketId}/comments`, { content });
       setContent('');
-      onCommentAdded();  // Refresh comments list
+      onCommentAdded();
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to add comment');
     } finally {
@@ -29,22 +29,25 @@ export default function CommentForm({ ticketId, onCommentAdded }: CommentFormPro
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-4">
-      <textarea
-        placeholder="Add a comment"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        required
-        className="border p-2 w-full"
-      />
-      <button
-        type="submit"
-        disabled={loading}
-        className="bg-blue-500 text-white p-2 mt-2"
-      >
-        {loading ? 'Adding...' : 'Add Comment'}
-      </button>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-    </form>
+    <div className="bg-bg-main border border-border-soft rounded-lg shadow-lg p-6 reveal visible">
+      <h4 className="text-lg font-semibold mb-4 text-text-main">Add a Comment</h4>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <textarea
+          placeholder="Write your comment here..."
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+          className="w-full p-3 bg-bg-main border border-border-soft rounded-lg text-text-main placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent-main h-24 resize-none"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="px-6 py-3 bg-accent-main text-text-main rounded-lg hover:bg-opacity-80 transition duration-200 disabled:opacity-50"
+        >
+          {loading ? 'Adding...' : 'Add Comment'}
+        </button>
+        {error && <p className="text-red-400">{error}</p>}
+      </form>
+    </div>
   );
 }
