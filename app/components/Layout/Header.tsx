@@ -8,20 +8,48 @@ export default function Header() {
   const { user, logout } = useContext(AuthContext)!;
 
   return (
-    <header className="bg-gray-800 text-white p-4 flex justify-between">
-      <h1>Support Ticket System</h1>
-      {user ? (
-        <div>
-          <span>Welcome, {user.role}!</span>
-          <Link href="/tickets" className="ml-4">Tickets</Link>
-          <button onClick={logout} className="ml-4">Logout</button>
+    <header className="bg-gradient-to-r from-bg-main to-accent-soft border-b border-border-soft shadow-lg reveal visible">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <h1 className="text-xl font-bold text-text-main hover:text-accent-main transition duration-200">
+            Support Ticket System
+          </h1>
+          <nav className="flex space-x-4">
+            {user ? (
+              <>
+                <span className="text-text-muted">Welcome, {user.role}!</span>
+                <Link
+                  href="/tickets"
+                  className="text-text-main hover:text-accent-main transition duration-200 px-3 py-2 rounded-lg hover:bg-accent-soft"
+                >
+                  Tickets
+                </Link>
+                <button
+                  onClick={logout}
+                  className="text-text-main hover:text-accent-main transition duration-200 px-3 py-2 rounded-lg hover:bg-accent-soft"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-text-main hover:text-accent-main transition duration-200 px-3 py-2 rounded-lg hover:bg-accent-soft"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/register"
+                  className="text-text-main hover:text-accent-main transition duration-200 px-3 py-2 rounded-lg hover:bg-accent-soft"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </nav>
         </div>
-      ) : (
-        <div>
-          <Link href="/login">Login</Link>
-          <Link href="/register" className="ml-4">Register</Link>
-        </div>
-      )}
+      </div>
     </header>
   );
 }
