@@ -31,51 +31,59 @@ export default function Register() {
 
   return (
     
-     <div className="min-h-screen flex items-center justify-center bg-bg-main p-4 reveal visible">
-    <div className="container mx-auto p-4 max-w-md">
-        <h2 className="text-2xl mb-4">Register</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="border p-2 w-full mb-2"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="border p-2 w-full mb-2"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="border p-2 w-full mb-2"
-          />
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className="border p-2 w-full mb-2"
-          >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-green-500 text-white p-2 w-full"
-          >
-            {loading ? 'Registering...' : 'Register'}
-          </button>
-          {error && <p className="text-red-500 mt-2">{error}</p>}
-        </form>
-      </div>
-    </div>
+     <div className="min-h-screen flex items-center justify-center bg-(--bg-main) p-4 reveal visible">
+  <div className="bg-(--bg-main) border border-(--border-soft) rounded-2xl shadow-2xl p-8 w-full max-w-md">
+    <h2 className="text-3xl font-bold text-center mb-6 text-(--text-main)">
+      Register
+    </h2>
+
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <input
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+        className="w-full p-3 mb-2 rounded-lg border border-(--border-soft) bg-(--bg-main) text-(--text-main) placeholder:text-(--text-muted) focus:outline-none focus:ring-2 focus:ring-(--accent-main) transition"
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="w-full p-3 mb-2 rounded-lg border border-(--border-soft) bg-(--bg-main) text-(--text-main) placeholder:text-(--text-muted) focus:outline-none focus:ring-2 focus:ring-(--accent-main) transition"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+        className="w-full p-3 mb-2 rounded-lg border border-(--border-soft) bg-(--bg-main) text-(--text-main) placeholder:text-(--text-muted) focus:outline-none focus:ring-2 focus:ring-(--accent-main) transition"
+      />
+      <select
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        className="w-full p-3 mb-2 rounded-lg border border-(--border-soft) bg-(--bg-main) text-(--text-main) placeholder:text-(--text-muted) focus:outline-none focus:ring-2 focus:ring-(--accent-main) transition"
+      >
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full p-3 bg-linear-to-r from-[#E75480] to-[#FF85A2] text-white rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition disabled:opacity-50"
+      >
+        {loading ? 'Registering...' : 'Register'}
+      </button>
+
+      {error && (
+        <p className="text-red-400 mt-2 text-center">{error}</p>
+      )}
+    </form>
+  </div>
+</div>
+
   );
 }
