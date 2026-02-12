@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { AuthContext } from './../../components/Auth/AuthContext';
 import api from './../../lib/api';
-import { Ticket , Comment} from '../../../types/index';
+import { Ticket, Comment } from '../../../types';
 import Header from './../../components/Layout/Header';
 import CommentForm from './../../components/Tickets/CommentForm';
 
@@ -74,7 +74,6 @@ export default function TicketDetail() {
   };
 
   const handleCommentAdded = () => {
-    // Re-fetch comments after adding
     const fetchComments = async () => {
       const res = await api.get(`/tickets/${id}/comments`);
       setComments(res.data);
@@ -82,42 +81,81 @@ export default function TicketDetail() {
     fetchComments();
   };
 
-  if (!ticket) return <><Header /><div className="container mx-auto p-4">Loading...</div></>;
+  if (!ticket) return (
+    <>
+      <Header />
+      <div className="min-h-screen flex items-center justify-center bg-bg-main text-text-main reveal visible">
+        <div className="w-full max-w-md h-2 bg-border-soft rounded-full overflow-hidden">
+          <div className="h-full bg-accent-main animate-loading-bar"></div>
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <>
       <Header />
-      <div className="container mx-auto p-4 max-w-2xl">
-        <h1 className="text-2xl mb-4">{ticket.title}</h1>
-        <p className="mb-4">{ticket.description}</p>
-        <div className="mb-4">
-          <label>Status: </label>
-          <select value={status} onChange={(e) => setStatus(e.target.value)} className="border p-2 ml-2">
-            <option value="open">Open</option>
-            <option value="closed">Closed</option>
-            <option value="in-progress">In Progress</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label>Category: </label>
-          <input value={category} onChange={(e) => setCategory(e.target.value)} className="border p-2 ml-2" disabled={user?.role !== 'admin'} />
-        </div>
-        <button onClick={updateTicket} disabled={loading} className="bg-blue-500 text-white p-2 mr-4">
-          {loading ? 'Updating...' : 'Update Ticket'}
-        </button>
-        {user?.role === 'admin' && (
-          <button onClick={deleteTicket} className="bg-red-500 text-white p-2">Delete Ticket</button>
-        )}
-        {error && <p className="text-red-500 mt-4">{error}</p>}
-
-        <h3 className="text-xl mt-6 mb-2">Comments</h3>
-        {comments.map(comment => (
-          <div key={comment._id} className="border p-2 mb-2">
-            <p>{comment.content}</p>
-            <small>By {comment.createdBy} on {new Date(comment.createdAt).toLocaleDateString()}</small>
+      <div className="min-h-screen bg-bg-main p-4 reveal visible">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-bg-main border border-border-soft rounded-lg shadow-lg p-8 mb-6">
+            <h1 className="text-3xl font-bold mb-4 text-text-main">{ticket.title}</h1>
+            <p className="text-text-muted mb-6">{ticket.description}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div>
+                <label className="block text-text-main mb-2">Status</label>
+                <select
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  className="w-full p-3 bg-bg-main border border-border-soft rounded-lg text-text-main focus:outline-none focus:ring-2 focus:ring-accent-main"
+                >
+                  <option value="open">Open</option>
+                  <option value="closed">Closed</option>
+                  <option value="in-progress">In Progress</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-text-main mb-2">Category</label>
+                <input
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  disabled={user?.role !== 'admin'}
+                  className="w-full p-3 bg-bg-main border border-border-soft rounded-lg text-text-main focus:outline-none focus:ring-2 focus:ring-accent-main disabled:opacity-50"
+                />
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <button
+                onClick={updateTicket}
+                disabled={loading}
+                className="px-6 py-3 bg-accent-main text-text-main rounded-lg hover:bg-opacity-80 transition duration-200 disabled:opacity-50"
+              >
+                {loading ? 'Updating...' : 'Update Ticket'}
+              </button>
+              {user?.role === 'admin' && (
+                <button
+                  onClick={deleteTicket}
+                  className="px-6 py-3 bg-red-600 text-text-main rounded-lg hover:bg-red-700 transition duration-200"
+                >
+                  Delete Ticket
+                </button>
+              )}
+            </div>
+            {error && <p className="text-red-400 mt-4">{error}</p>}
           </div>
-        ))}
-        <CommentForm ticketId={id as string} onCommentAdded={handleCommentAdded} />
+
+          <div className="bg-bg-main border border-border-soft rounded-lg shadow-lg p-8">
+            <h3 className="text-2xl font-bold mb-4 text-text-main">Comments</h3>
+            <div className="space-y-4 mb-6">
+              {comments.map(comment => (
+                <div key={comment._id} className="bg-accent-soft border border-border-soft rounded-lg p-4">
+                  <p className="text-text-main">{comment.content}</p>
+                  <small className="text-text-muted">By {comment.createdBy} on {new Date(comment.createdAt).toLocaleDateString()}</small>
+                </div>
+              ))}
+            </div>
+            <CommentForm ticketId={id as string} onCommentAdded={handleCommentAdded} />
+          </div>
+        </div>
       </div>
     </>
   );

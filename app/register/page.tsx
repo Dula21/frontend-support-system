@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import api from './../lib/api';
-import Header from './../components/Layout/Header';
+//import Header from './../components/Layout/Header';
 
 
 export default function Register() {
@@ -30,9 +30,9 @@ export default function Register() {
   };
 
   return (
-    <>
-      <Header />
-      <div className="container mx-auto p-4 max-w-md">
+    
+     <div className="min-h-screen flex items-center justify-center bg-bg-main p-4 reveal visible">
+    <div className="container mx-auto p-4 max-w-md">
         <h2 className="text-2xl mb-4">Register</h2>
         <form onSubmit={handleSubmit}>
           <input
@@ -76,6 +76,6 @@ export default function Register() {
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </form>
       </div>
-    </>
+    </div>
   );
 }
