@@ -3,9 +3,16 @@
 import { useContext } from 'react';
 import Link from 'next/link';
 import { AuthContext } from '../Auth/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const { user, logout } = useContext(AuthContext)!;
+
+  const router = useRouter();
+const handleLogout = () => {
+  logout();  // From context
+  router.push('/login');
+};
 
   return (
     <header className="bg-linear-to-r from-(var(--bg-main)) to-(var(--accent-soft)) border-b border-(--border-soft) shadow-lg reveal visible">
@@ -30,7 +37,7 @@ export default function Header() {
             </Link>
 
             <button
-              onClick={logout}
+              onClick={handleLogout}
               className="text-(--text-main) hover:text-(--accent-main) transition duration-200 px-3 py-2 rounded-lg hover:bg-(--accent-soft)"
             >
               Logout
