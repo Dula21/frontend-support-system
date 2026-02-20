@@ -16,12 +16,20 @@ export interface Ticket {
   assignedTo?: string;
   createdAt: string;
   updatedAt: string;
+  attachment: string;
+
+  creatorInfo?: {
+    name: string;
+    email: string;
+  }; // Optional field for assigned user's name
+
 }
 
 export interface Comment {
   _id: string;  // Ensure this is included
   ticketId: string;
-  content: string;
+  UserId: string;
+  comment: [];
   createdBy: string;
   createdAt: string;
 }
