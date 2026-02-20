@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { AuthContext } from './../components/Auth/AuthContext';
 import api from './../lib/api';
 import { Ticket } from '../../types';
+import { redirect } from 'next/navigation';
 
 export default function Tickets() {
   const { user } = useContext(AuthContext)!;
@@ -32,11 +33,7 @@ export default function Tickets() {
 
   // If user is not logged in
   if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-bg-main text-text-main">
-        Please log in to view tickets.
-      </div>
-    );
+    redirect('/login');
   }
 
   // Logged-in view
@@ -58,7 +55,7 @@ export default function Tickets() {
 
         <Link
           href="/tickets/new"
-          className="inline-block mb-6 px-6 py-3 bg-accent-main text-text-main rounded-lg font-semibold hover:shadow-lg hover:scale-105 transition"
+          className="inline-block mb-6 px-6 py-3 bg-(--accent-main) text-text-main rounded-2xl font-semibold shadow-md hover:shadow-lg hover:scale-105 transition transform duration-200 ease-in-out"
         >
           Create New Ticket
         </Link>
@@ -94,7 +91,7 @@ export default function Tickets() {
               </p>
               <Link
                 href={`/tickets/${ticket._id}`}
-                className="mt-4 inline-block px-4 py-2 bg-accent-main text-text-main rounded-lg hover:bg-opacity-80 transition"
+                className="mt-4 inline-block px-6 py-3 bg-(--accent-main) text-text-main rounded-2xl font-semibold shadow-md hover:shadow-lg hover:scale-105 transition transform duration-200 ease-in-out"
               >
                 View Details
               </Link>
