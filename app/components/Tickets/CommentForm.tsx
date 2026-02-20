@@ -1,25 +1,35 @@
 'use client';
 
 import { useState } from 'react';
-import api from './../../lib/api';
+import api from '../../lib/api';
 
-interface CommentFormProps {
+interface Props {
   ticketId: string;
   onCommentAdded: () => void;
 }
 
-export default function CommentForm({ ticketId, onCommentAdded }: CommentFormProps) {
-  const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
+export default function CommentForm({ ticketId, onCommentAdded }: Props) {
+  const [comment, setComment] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!comment.trim()) {
+      setError('Comment required');
+      return;
+    }
+
     setLoading(true);
     setError('');
+
     try {
-      await api.post(`/tickets/${ticketId}/comments`, { content });
-      setContent('');
+      await api.post(`/tickets/${ticketId}/comments`, {
+        comment: comment
+      });
+
+      setComment('');
       onCommentAdded();
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to add comment');
@@ -29,25 +39,30 @@ export default function CommentForm({ ticketId, onCommentAdded }: CommentFormPro
   };
 
   return (
-    <div className="bg-bg-main border border-border-soft rounded-lg shadow-lg p-6 reveal visible">
-      <h4 className="text-lg font-semibold mb-4 text-text-main">Add a Comment</h4>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <textarea
-          placeholder="Write your comment here..."
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-          className="w-full p-3 bg-bg-main border border-border-soft rounded-lg text-text-main placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent-main h-24 resize-none"
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="px-6 py-3 bg-accent-main text-text-main rounded-lg hover:bg-opacity-80 transition duration-200 disabled:opacity-50"
-        >
-          {loading ? 'Adding...' : 'Add Comment'}
-        </button>
-        {error && <p className="text-red-400">{error}</p>}
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <textarea
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Add a comment..."
+        className="w-full p-3 bg-bg-main border border-border-soft rounded-lg text-text-main focus:outline-none focus:ring-2 focus:ring-accent-main"
+      />
+
+      <button
+        type="submit"
+        disabled={loading}
+        className={`
+          px-6 py-3
+          bg-blue-600 text-(var(--text-main))
+          rounded-2xl font-semibold
+          shadow-md hover:shadow-lg hover:scale-105
+          transition transform duration-200 ease-in-out
+          disabled:opacity-50
+        `}
+      >
+        {loading ? 'Adding...' : 'Add Comment'}
+      </button>
+
+      {error && <p className="text-red-400">{error}</p>}
+    </form>
   );
 }
