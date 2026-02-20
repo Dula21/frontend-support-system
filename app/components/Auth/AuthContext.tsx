@@ -32,9 +32,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
-  };
+  localStorage.removeItem('token');
+  setUser(null);
+  // Redirect to login
+  window.location.href = '/login';
+};
 
   return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
 };
