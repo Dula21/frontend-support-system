@@ -17,6 +17,7 @@ export interface Ticket {
   createdAt: string;
   updatedAt: string;
   attachment: string;
+  assignedAdminName?: string;  // The Name (New!)
 
   creatorInfo?: {
     name: string;
