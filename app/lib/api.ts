@@ -1,9 +1,15 @@
-
 import axios from 'axios';
 
+// --- UPDATED SECTION ---
+// Uses the Vercel environment variable in production, or localhost for your own testing.
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+  ? `${process.env.NEXT_PUBLIC_API_URL}/api` 
+  : 'http://localhost:5000/api';
+
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: API_BASE_URL,
 });
+// -----------------------
 
 // Request Interceptor: Attach Token
 api.interceptors.request.use((config) => {
@@ -14,7 +20,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Response Interceptor: Handle Global Errors (The Fix)
+// Response Interceptor: Handle Global Errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
